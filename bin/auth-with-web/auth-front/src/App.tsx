@@ -3,11 +3,10 @@ import "./App.css";
 import { Nav } from "./components/Nav";
 import { Login } from "./pages/Login";
 import { Home } from "./pages/Home";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   const [name, setName] = useState("");
-  let navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -15,9 +14,7 @@ function App() {
         headers: { "Content-Type": "application/json" },
         credentials: "include",
       });
-      console.log(response);
       const content = await response.json();
-
 
       if (content.name) {
         setName(content.name);

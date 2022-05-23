@@ -1,19 +1,22 @@
 import { Link, useNavigate } from "react-router-dom";
 
-export const Nav = (props: { name: string, setName: (name: string) => void }) => {
+export const Nav = (props: {
+  name: string;
+  setName: (name: string) => void;
+}) => {
   let navigate = useNavigate();
   const logout = async () => {
     await fetch("http://localhost:8000/api/logout", {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       credentials: "include",
     });
-    props.setName('');
+    props.setName("");
     navigate("/login");
-  }
+  };
 
   let menu;
-  if (props.name === '') {
+  if (props.name === "") {
     menu = (
       <Link
         to="/login"
@@ -21,7 +24,7 @@ export const Nav = (props: { name: string, setName: (name: string) => void }) =>
       >
         Login
       </Link>
-    )
+    );
   } else {
     menu = (
       <div
@@ -30,7 +33,7 @@ export const Nav = (props: { name: string, setName: (name: string) => void }) =>
       >
         Logout
       </div>
-    )
+    );
   }
   return (
     <div className="navbar bg-slate-800">
@@ -39,9 +42,7 @@ export const Nav = (props: { name: string, setName: (name: string) => void }) =>
           AsRock
         </Link>
       </div>
-      <div className="flex-none">
-        {menu}
-      </div>
+      <div className="flex-none">{menu}</div>
     </div>
   );
 };
