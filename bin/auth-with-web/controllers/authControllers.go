@@ -15,12 +15,12 @@ func Login(c *fiber.Ctx) error {
 	if err := c.BodyParser(&data); err != nil {
 		return err
 	}
-	log.Println(data["user"])
+	log.Println(data["email"])
 	log.Println(data["password"])
 
 	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"user": data["user"],
-		"exp":  time.Now().Add(time.Hour * 24).Unix(),
+		"email": data["email"],
+		"exp":   time.Now().Add(time.Hour * 24).Unix(),
 	})
 
 	token, err := claims.SignedString([]byte(SecretKey))
@@ -41,7 +41,7 @@ func Login(c *fiber.Ctx) error {
 	c.Cookie(&cookie)
 
 	return c.JSON(fiber.Map{
-		"message": "success",
+		"name": data["email"],
 	})
 }
 
@@ -63,9 +63,10 @@ func User(c *fiber.Ctx) error {
 	}
 
 	claims := token.Claims.(jwt.MapClaims)
-	log.Println(claims["user"])
+	log.Println(claims)
+	log.Println(claims["email"])
 	return c.JSON(fiber.Map{
-		"message": "success",
+		"name": claims["email"],
 	})
 }
 
