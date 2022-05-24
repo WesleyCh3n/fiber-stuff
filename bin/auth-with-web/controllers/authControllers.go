@@ -15,6 +15,8 @@ func Login(c *fiber.Ctx) error {
 	if err := c.BodyParser(&data); err != nil {
 		return err
 	}
+
+	// TODO: check if auth succeeded
 	log.Println(data["email"])
 	log.Println(data["password"])
 
