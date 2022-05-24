@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const Nav = (props: {
   name: string;
@@ -6,13 +7,19 @@ export const Nav = (props: {
 }) => {
   let navigate = useNavigate();
   const logout = async () => {
-    await fetch("http://localhost:8000/api/logout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
+    const instance = axios.create({
+      baseURL: "http://localhost:8000",
+      withCredentials: true,
     });
-    props.setName("");
-    navigate("/login");
+    await instance
+      .post("/api/logout")
+      .then(() => {
+        props.setName("");
+        navigate("/login")
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   let menu;
