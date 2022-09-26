@@ -26,6 +26,7 @@ export const Login = (props: { setName: (name: string) => void }) => {
         <form className="space-y-6" onSubmit={submit}>
           <input
             type="text"
+            autoFocus={true}
             className="w-full py-3 px-3 border border-gray-300
               rounded-lg shadow text-xl text-gray-700 transition ease-in-out
               focus:border-blue-600 focus:outline-none"
@@ -40,11 +41,12 @@ export const Login = (props: { setName: (name: string) => void }) => {
               focus:border-blue-600 focus:outline-none"
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="on"
           />
           <button
             type="submit"
-            className="w-full py-3 bg-cyan-600 text-white font-medium text-lg uppercase
-            rounded shadow-md hover:bg-cyan-700
+            className="w-full py-3 bg-cyan-600 text-white font-medium text-lg
+            uppercase rounded shadow-md hover:bg-cyan-700
             hover:shadow-lg focus:bg-blue-700
             active:bg-cyan-800 transition duration-150
             ease-in-out"
@@ -54,7 +56,8 @@ export const Login = (props: { setName: (name: string) => void }) => {
             Sign in
           </button>
         </form>
-        <span className="w-full flex m-2 justify-center text-red-500">
+        <span className="w-full flex m-2 justify-center text-lg text-red-500
+          font-bold">
           {errorMsg}
         </span>
       </div>
