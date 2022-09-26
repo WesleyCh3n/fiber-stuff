@@ -6,6 +6,7 @@ export const Home = () => {
   const [name, setName] = useState("");
   let navigate = useNavigate();
   useEffect(() => {
+    // TODO: use zustand
     (async () => {
       const instance = axios.create({
         baseURL: "http://localhost:8000",
@@ -25,3 +26,5 @@ export const Home = () => {
 
   return <div className="p-3 text-xl">{name ? "Hi " + name : ""}</div>;
 };
+
+export default Home;

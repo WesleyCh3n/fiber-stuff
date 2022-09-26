@@ -1,37 +1,30 @@
 import { useEffect, useState } from "react";
-import "./App.css";
-import { Nav } from "./components/Nav";
-import { Login } from "./pages/Login";
-import { Home } from "./pages/Home";
 import { Route, Routes } from "react-router-dom";
-import axios from "axios";
+import { isAuth } from "./api/Auth";
+
+import { Nav } from "./components";
+import { Home, Login, PageNotFound } from "./pages";
 
 function App() {
   const [name, setName] = useState("");
 
   useEffect(() => {
     (async () => {
-      const instance = axios.create({
-        baseURL: "http://localhost:8000",
-        withCredentials: true,
-      });
-      await instance
-        .get("/api/user")
-        .then((resp) => {
-          setName(resp.data.name)
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      let result = await isAuth();
+      if (result.data) {
+        setName(result.data.name);
+      }
     })();
   });
 
   return (
-    <div className="App">
+    <div>
       <Nav name={name} setName={setName} />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login setName={setName} />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>
   );
