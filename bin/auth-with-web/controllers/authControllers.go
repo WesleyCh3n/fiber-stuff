@@ -8,7 +8,7 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 )
 
-const SecretKey = "secret"
+const SecretKey = "mySecretString"
 
 func Login(c *fiber.Ctx) error {
 	var data map[string]string
@@ -19,6 +19,13 @@ func Login(c *fiber.Ctx) error {
 	// TODO: check if auth succeeded
 	log.Println(data["email"])
 	log.Println(data["password"])
+
+	if data["email"] != "wesley" || data["password"] != "123" {
+		c.Status(fiber.StatusUnauthorized)
+		return c.JSON(fiber.Map{
+			"message": "unauthenticated",
+		})
+	}
 
 	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"email": data["email"],
